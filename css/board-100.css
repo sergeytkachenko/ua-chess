@@ -1,0 +1,64 @@
+.board-border {
+    border-width: 15px;
+    height: 855px;
+    width: 855px;
+}
+
+
+.board-100 {
+    position: relative;
+    margin: 10px;
+}
+
+.board-100 table.chess tr td > div {
+    width: 100%;
+    height: 100px;
+}
+
+.board-100.chess div.chess-bp {
+    background: url("/img/100/bp.png") no-repeat center;
+}
+
+.board-100.chess div.chess-br {
+    background: url("/img/100/br.png") no-repeat center;
+}
+
+.board-100.chess div.chess-bb {
+    background: url("/img/100/bb.png") no-repeat center;
+}
+
+.board-100.chess div.chess-bq {
+    background: url("/img/100/bq.png") no-repeat center;
+}
+
+.board-100.chess div.chess-bkg {
+    background: url("/img/100/bk.png") no-repeat center;
+}
+
+.board-100.chess div.chess-bk {
+    background: url("/img/100/bk.png") no-repeat center;
+}
+
+.board-100.chess div.chess-wp {
+    background: url("/img/100/wp.png") no-repeat center;
+}
+
+.board-100.chess div.chess-wr {
+    background: url("/img/100/wr.png") no-repeat center;
+}
+
+.board-100.chess div.chess-wb {
+    background: url("/img/100/wb.png") no-repeat center;
+}
+
+.board-100.chess div.chess-wq {
+    background: url("/img/100/wq.png") no-repeat center;
+}
+
+.board-100.chess div.chess-wkg {
+    background: url("/img/100/wk.png") no-repeat center;
+}
+
+.board-100.chess div.chess-wk {
+    background: url("/img/100/wn.png") no-repeat center;
+}

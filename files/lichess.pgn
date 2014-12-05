@@ -1,0 +1,18 @@
+[Event "Casual game"]
+[Site "http://lichess.org/yqSpTcTH"]
+[Date "2014.11.22"]
+[White "lichess AI level 1"]
+[Black "bombascter"]
+[Result "1-0"]
+[WhiteElo "?"]
+[BlackElo "1833"]
+[PlyCount "67"]
+[Variant "From Position"]
+[TimeControl "-"]
+[ECO "?"]
+[Opening "?"]
+[FEN "8/3k2pp/p2N1p2/4p3/1p6/1Pp2P2/P1R3PP/1K6 b - - 0 32"]
+[SetUp "1"]
+[Annotator "lichess.org"]
+
+32... Kxd6 33. Rc1 Kc5 { Black resigns } 34. Kc2 1-0

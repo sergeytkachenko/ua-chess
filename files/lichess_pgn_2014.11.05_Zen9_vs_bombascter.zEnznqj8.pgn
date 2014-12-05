@@ -1,0 +1,21 @@
+[Event "Casual game"]
+[Site "http://lichess.org/zEnznqj8"]
+[Date "2014.11.05"]
+[White "Zen9"]
+[Black "bombascter"]
+[Result "1-0"]
+[WhiteElo "2091"]
+[BlackElo "1823"]
+[PlyCount "97"]
+[Variant "Standard"]
+[TimeControl "180+0"]
+[ECO "A00"]
+[Opening "Van Geet Opening, General"]
+[Annotator "lichess.org"]
+
+1. Nc3 { Van Geet Opening, General } c6 2. e4 d5 3. Qe2 dxe4 4. Nxe4 Nf6 5. Nxf6+ gxf6 6. g3 e5 7. Bg2 Be7 8. d3 Be6
+ 9. Nf3 Nd7 10. Be3 c5 11. O-O Qc7 12. a3 h5 13. h4 Bg4 14. Qd2 O-O-O 15. b4 Bd6 16. bxc5 Bxc5 17. Bxc5 Nxc5 18. Qb4 b6
+  19. a4 a5 20. Qc4 Be6 21. Qb5 Bd7 22. Qb2 Bc6 23. Rab1 Kb7 24. Qa3 Nxa4 25. Nd2 Nc5 26. Qxa5 Bxg2 27. Kxg2 Qc6+
+  28. Kg1 Ra8 29. Qb4 Ra4 30. Qb2 Rha8 31. Nc4 Rxc4 32. dxc4 Ne6 33. Qb5 Nd4 34. Qd5 Qxd5 35. cxd5 Rd8 36. c3 Nf3+
+  37. Kg2 Nd2 38. Rbd1 Nxf1 39. Kxf1 Kc7 40. Ke2 Kd6 41. Kd3 Kc5 42. Ke4 Rd6 43. f3 b5 44. g4 b4 45. cxb4+ Kxb4
+  46. Rc1 Kb5 47. gxh5 f5+ 48. Kxe5 Rxd5+ 49. Kxd5 { Black forfeits on time } 1-0

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="google-site-verification" content="gdaTpeZW5UjBSYrrIpWxF8wv0PijtubQQyC5qSvGTLA" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>Шахматы в слепую</title>
+    <link href="/css/board/board.css" rel="stylesheet" type="text/css">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <script src="/js/jquery/jquery-2.1.1.min.js"></script>
+    <script src="/js/jquery/jquery-ui-1.10.4.custom.js"></script>
+
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <!--<link href="/js/extjs/resources/css/ext-all.css" rel="stylesheet" type="text/css">-->
+    <!--<script src="/js/extjs/ext-all-debug.js"></script>-->
+    <link href="/ext-5.0.1/packages/ext-aria/build/resources/ext-aria-all-debug.css" rel="stylesheet" type="text/css">
+    <script src="/ext-5.0.1/build/ext-all-debug.js"></script>
+    <script src="/javascript/Chess/util/FileLocal.js"></script>
+    <script src="/javascript/Chess/util/jquery.js"></script>
+    <script src="/javascript/html2canvas.js"></script>
+
+    <!--<script src="/javascript/Chess/Chess.Board.js"></script>-->
+    <style>
+        div[data-role='clock'] {
+            position: absolute;
+            top: 25px
+        }
+        div[data-role='clock'] > div {
+            float: left;
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+    </style>
+</head>
+<body style="padding: 50px 0 0 10px">
+<script>
+    Ext.onReady(function () {
+        Ext.Loader.setPath({
+            'Chess': '/javascript/Chess',
+            'Audio' : '/javascript/Audio'
+        });
+        Ext.require([
+            'Chess.Application.Controller',
+            'Chess.Application.Command.CorrectMove',
+            'Chess.Application.PlayEngineController',
+            'Chess.Board',
+            'Chess.Cache',
+            'Chess.GroupRegistry',
+            'Chess.Moves',
+            'Chess.Event',
+            'Chess.Debuger',
+            'Chess.Fen.Reader',
+            'Chess.Fen.Writer',
+            'Chess.Pgn.Interface',
+            'Chess.DragDrop.Board',
+            'Audio.Voices'
+        ], function () { // after loading classes
+
+            Chess.GroupRegistry.getInstance('cache');
+            var group = Chess.GroupRegistry.getInstance('play2');
+            var pgnInterface = group.get('Chess.Pgn.Interface');
+            var commandsIterator = group.get("Chess.Application.CommandsIterator");
+
+            commandsIterator.registryCommand(group.get("Chess.Application.Command.SetPgnNotation"));
+            commandsIterator.registryCommand(group.get("Chess.Application.Command.Engine.SendMoveToEngine"));
+
+            var controller = group.get("Chess.Application.Controller");
+            controller.run(group.get("Chess.Application.PlayEngineController"));
+
+            var board = group.get("board");
+
+            var event = group.get('Chess.Event');
+
+            event.on("board.drag.start", function () {
+                Chess.Debuger.time("dragStart");
+                var dataID = arguments[0][0].target.parentNode.getAttribute('data-id');
+                arguments[0][1].helper[0].setAttribute('data-id', dataID);
+                board.setBackgroundColor(group.get("Chess.Figures.Terms").getPossibleMoves(parseInt(dataID)));
+                Chess.Debuger.timeEnd("dragStart");
+            });
+
+            board.printFigures();
+            board.initDragDrop();
+
+            var URL = "http://localhost:8090";
+            var socket = new SockJS(URL+'/engine');
+            window.stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function(frame) {
+                stompClient.subscribe('/topic/engine', function(data){ // подписка на слушание канала
+                    // TODO pattern for pawn transform 
+                    var data = Ext.JSON.decode(data.body);
+                    var move = data.bestMove;
+                    var patt = /^([a-h0-8]{2})([a-h0-8]{2})([NBRQ])?$/i,
+                            fromCell = Chess.Board.cellTransform(move.replace(patt, "$1")),
+                            toCell = Chess.Board.cellTransform(move.replace(patt, "$2")),
+                            pawnTransform = move.replace(patt, "$3").toUpperCase();
+                    controller.specificController.sendMove(fromCell, toCell, pawnTransform);
+                });
+                var fen = pgnInterface.getLastFenFromMove() || Chess.Fen.Reader.fenStart;
+                sendFen(fen);
+            });
+            function disconnect() {
+                stompClient.disconnect();
+                console.log("Disconnected");
+            }
+
+        });
+
+    });
+    function sendFen(fen) {
+        if(!fen) {throw "fen not found"}
+        stompClient.send("/app/engine", {}, JSON.stringify(
+            {
+                fen : fen,
+                timeLimit : Math.round(Math.random()*100),
+                pathEngine : "/Volumes/1083/Users/admin/Documents/stockfish/src/stockfish"
+            }
+        ));
+    }
+</script>
+    <div style="width:600px; height: 600px;float: left;">
+        <div class="board-coordinates" id="play2">
+        <div class="board">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <span class="draw"></span>
+            <span class="event">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </span>
+        </div>
+        <div data-align="left">
+            <div><spn>8</spn></div>
+            <div><spn>7</spn></div>
+            <div><spn>6</spn></div>
+            <div><spn>5</spn></div>
+            <div><spn>4</spn></div>
+            <div><spn>3</spn></div>
+            <div><spn>2</spn></div>
+            <div><spn>1</spn></div>
+        </div>
+        <div data-align="right" data-display="false">
+            <div><spn>8</spn></div>
+            <div><spn>7</spn></div>
+            <div><spn>6</spn></div>
+            <div><spn>5</spn></div>
+            <div><spn>4</spn></div>
+            <div><spn>3</spn></div>
+            <div><spn>2</spn></div>
+            <div><spn>1</spn></div>
+        </div>
+        <div data-align="top" data-display="false">
+            <div>a</div>
+            <div>b</div>
+            <div>c</div>
+            <div>d</div>
+            <div>e</div>
+            <div>f</div>
+            <div>g</div>
+            <div>h</div>
+        </div>
+        <div data-align="bottom">
+            <div>a</div>
+            <div>b</div>
+            <div>c</div>
+            <div>d</div>
+            <div>e</div>
+            <div>f</div>
+            <div>g</div>
+            <div>h</div>
+        </div>
+    </div>
+    </div>
+<div style="width:600px;float: left;" data-boardId="play2" data-role="notation">[Event "Рейтинговая партия, 3m+2s"]
+    [Site "Main Playing Hall"]
+    [Date "2014.04.10"]
+    [Round "?"]
+    [White "Koira"]
+    [Black "Sergye59tkacheko"]
+    [Result "1-0"]
+    [ECO "B15"]
+    [BlackElo "1613"]
+    [PlyCount "99"]
+    [EventDate "2014.04.10"]
+    [TimeControl "180+2"]
+
+    1. e4 {[%emt 0:00:07]} c6 {[%emt 0:00:01]} 2. Nf3 {[%emt 0:00:02]} d5 {[%emt 0:
+    00:00]} 3. Nc3 {[%emt 0:00:01]} Bg4 {[%emt 0:00:01]} 4. Be2 {[%emt 0:00:27]}
+    dxe4 {[%emt 0:00:03]} 5. Nxe4 {[%emt 0:00:02]} Nf6 {[%emt 0:00:00][%cal Ge4f6]}
+    6. Nxf6+ {[%emt 0:00:04]} exf6 {[%emt 0:00:01]} 7. d4 {[%emt 0:00:03][%cal
+    Yh2h3]} Bd6 {[%emt 0:00:01]} 8. O-O {[%emt 0:00:03][%cal Rd6h2]} O-O {[%emt 0:
+    00:01]} 9. c4 {[%emt 0:00:08][%csl Ge5,Gg5]} Re8 {[%emt 0:00:01][%csl Ye2]} 10.
+    h3 {[%emt 0:00:05][%csl Rg4]} Bh5 {[%emt 0:00:02]} 11. Be3 {[%emt 0:00:07]
+    Диаграмма [#]} Nd7 $5 {[%emt 0:00:02]} 12. d5 $18 {[%emt 0:00:10]} Qc7 {[%emt
+    0:00:04]} 13. dxc6 $143 {[%emt 0:00:09]} bxc6 {[%emt 0:00:01]} 14. Nd4 {[%emt
+    0:00:04]} Bg6 {[%emt 0:00:13]} 15. Bf3 {[%emt 0:00:03]} Ne5 {[%emt 0:00:05]}
+    16. Re1 {[%emt 0:00:29]} Rad8 {[%emt 0:00:08]} 17. Rc1 {[%emt 0:00:14]} f5 {
+    [%emt 0:00:06]} 18. Qe2 {[%emt 0:00:12]} Bb4 {[%emt 0:00:03]} 19. Red1 {[%emt
+    0:00:11]} c5 {[%emt 0:00:27]} 20. Nb5 {[%emt 0:00:13]} Nxf3+ {[%emt 0:00:38]}
+    21. Qxf3 {[%emt 0:00:04]} Qe7 {[%emt 0:00:02]} 22. a3 {[%emt 0:00:09]} Ba5 {
+    [%emt 0:00:03]} 23. Bf4 {[%emt 0:00:11]} Qe4 {[%emt 0:00:09]} 24. Qxe4 {[%emt
+    0:00:13]} fxe4 {[%emt 0:00:05]} 25. Bd6 {[%emt 0:00:10]} e3 {[%emt 0:00:14] '}
+    26. fxe3 {[%emt 0:00:06]} Bd2 {[%emt 0:00:03]} 27. Rxd2 {[%emt 0:00:05]} Rxe3 {
+    [%emt 0:00:01]} 28. Rcd1 {[%emt 0:00:04]} Rb3 {[%emt 0:00:02]} 29. Bxc5 {[%emt
+    0:00:02]} Rxd2 {[%emt 0:00:02]} 30. Rxd2 {[%emt 0:00:02]} h6 {[%emt 0:00:00]}
+    31. Rd8+ {[%emt 0:00:02]} Kh7 {[%emt 0:00:01]} 32. Rd2 {[%emt 0:00:01]} a6 {
+    [%emt 0:00:01]} 33. Nd4 {[%emt 0:00:02]} Rb7 {[%emt 0:00:04]} 34. Bb4 {[%emt 0:
+    00:01]} Rd7 {[%emt 0:00:03]} 35. Bc3 {[%emt 0:00:01]} Bb1 {[%emt 0:00:08]} 36.
+    c5 {[%emt 0:00:02]} Be4 {[%emt 0:00:04]} 37. c6 {[%emt 0:00:02]} Rc7 {[%emt 0:
+    00:01]} 38. b4 {[%emt 0:00:03]} Bxc6 {[%emt 0:00:01]} 39. Nxc6 {[%emt 0:00:02]}
+    Rxc6 {[%emt 0:00:00]} 40. Rd3 {[%emt 0:00:01]} Rc4 {[%emt 0:00:04]} 41. Kf2 {
+    [%emt 0:00:03]} g5 {[%emt 0:00:04]} 42. Ke2 {[%emt 0:00:01]} Kg6 {[%emt 0:00:
+    01]} 43. Kd2 {[%emt 0:00:01]} Rc6 {[%emt 0:00:03]} 44. Rd4 {[%emt 0:00:02]} f5
+    {[%emt 0:00:02]} 45. Kd3 {[%emt 0:00:01]} h5 {[%emt 0:00:02]} 46. Rd5 {[%emt 0:
+    00:02]} g4 {[%emt 0:00:01]} 47. Be5 {[%emt 0:00:02]} h4 {[%emt 0:00:05]} 48.
+    Rd6+ {[%emt 0:00:02]} Rxd6+ {[%emt 0:00:03]}</div>
+<button onclick="Chess.GroupRegistry.getInstance('play2').get('board').flip()">flip play2</button>
+<div id="test" style="clear: both; padding-top: 30px"></div>
+<script src="/javascript/Chess/test/ver-moves.js"></script>
+</body>
+</html>

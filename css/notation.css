@@ -1,0 +1,145 @@
+
+div.notation-pgn {
+    font-size: 14px;
+    font-family: 'Alegreya Sans SC', Tienne, Domine, arial;
+    font-weight: 300;
+    padding-top: 6px;
+}
+
+div.notation-pgn *{
+    margin-left: 5px;
+}
+
+div.notation-pgn span {
+    margin-left: 0;
+}
+
+div.branch > div.move:first-child {
+    margin-left: 0;
+}
+
+div.notation-pgn .result {
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
+}
+
+div.notation-pgn div{
+    display:  inline-block;
+    line-height: 17px;
+}
+
+div.notation-pgn i {
+    font-style: normal;
+    text-decoration: none;
+}
+
+div.notation-pgn .comment > .text{
+    color: royalblue;
+}
+
+div.notation-pgn .symbol {
+    color: red;
+}
+
+div.notation-pgn .branch b, div.notation-pgn .comment b {
+    font-weight: normal;
+}
+
+div.notation-pgn .symbol *, div.notation-pgn .branch i{
+    margin: 0;
+}
+
+div.notation-pgn .move {
+    cursor: pointer;
+}
+
+div.notation-pgn > .move span{
+    padding: 2px;
+}
+
+div.notation-pgn > .move > span {
+    margin: 0;
+
+}
+
+div.notation-pgn > .move > span{
+    font-weight: bold;
+}
+
+div.notation-pgn > .move * {
+    font-weight: normal;
+}
+
+div.notation-pgn > .move > .branch {
+    display: block;
+}
+
+div.notation-pgn .move span:hover{
+    text-decoration: underline;
+}
+
+div.notation-pgn .move.active > span {
+    color: #fff;
+    background-color: #000;
+}
+
+div.notation-pgn .time {
+    margin-left: 0;
+    font-size : 0.8em;
+    color: #AF00A8;
+}
+
+div.notation-overflow > div > div.x-panel-body {
+    overflow: auto;
+}
+
+div.engine {
+
+}
+
+div.engine * {
+    display: block;
+    float: left;
+    padding: 2px;
+    color: #444;
+}
+
+div.engine a.engine-move-a {
+    font-size: 13px;
+    font-family: Ubuntu, Helvetica, arial;
+    font-style: normal;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 2px;
+}
+
+div.engine a.engine-move-a:hover {
+    text-decoration: underline;
+}
+
+div.engine a.engine-move-a.active {
+    color: #FFF;
+    background-color: #000;
+}
+
+div#add-new-move{
+    height: 170px;
+}
+
+div#add-new-move table {
+    border: 0;
+    width : 100%;
+    height: 100%;
+}
+
+div#add-new-move table td {
+    width: 50%;
+    text-align: center;
+}
+
+div#add-new-move table td.move-pgn-td{
+    vertical-align: top;
+    padding-top: 20px;
+}

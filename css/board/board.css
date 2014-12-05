@@ -1,0 +1,193 @@
+@import "../extjs-fixed.css";
+@import "/css/chess-styles/my-style.css";
+
+div.board-general {
+    width: 100%;
+    height: 100%;text-align: center;
+    position: relative;
+}
+
+div.board-general > div {
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.board-coordinates {
+    padding: 15px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    position: relative;
+}
+
+.board-coordinates[data-coordinat='false'] {
+    padding: 0;
+}
+
+.board-coordinates[data-coordinat='false'] > div[data-align] {
+    display: none;
+}
+
+.board-coordinates div[data-align='left'] {
+    box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    padding: 15px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15px;
+    height: 100%;
+}
+
+.board-coordinates div[data-align='bottom'] {
+    box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    padding: 0 15px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15px;
+}
+
+.board-coordinates div[data-align='right'] {
+    box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    padding: 15px 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15px;
+    height: 100%;
+}
+
+.board-coordinates div[data-align='top'] {
+    box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    padding: 0 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 15px;
+}
+
+.board-coordinates > div[data-align] {
+    background-color: #c76e12;
+}
+
+.board-coordinates > div[data-align][data-display='false'] div{
+    display: none;
+}
+
+.board-coordinates > div[data-align] > div {
+    color: #ffffff;
+    font-size: .8em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 100%;
+    text-transform: uppercase;
+}
+
+.board-coordinates > div[data-align='left'] > div,.board-coordinates > div[data-align='right'] > div {
+    height: 12.5%;
+    width: 15px;
+    position: relative;
+}
+
+.board-coordinates > div[data-align='left'] > div spn,.board-coordinates > div[data-align='right'] > div spn{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -7px;
+    width: 100%;
+    text-align: center;
+}
+
+.board-coordinates > div[data-align='top'] > div,.board-coordinates > div[data-align='bottom'] > div {
+    width: 12.5%;
+    height: 15px;
+    float: left;
+    line-height: 16px;
+}
+
+.board {
+    width: 100%;
+    height: 100%;
+    background-color: #f0d9b5;
+    position: relative;
+    z-index: 1;
+}
+
+.board > div, .board > span.event > div {
+    width : 100%;
+    height: 12.5%;
+}
+
+.board > div > div, .board > span.event > div > div {
+    box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    width: 12.5%;
+    height: 100%;
+    float: left;
+    position: relative;
+}
+
+.board > div > div > img, .board > span.event > div > div > img {
+    width: 100%;
+    cursor: pointer;
+    /** added **/
+    left: 0;
+    top: 0;
+    position: absolute;
+}
+
+.board > div > div > img.ui-draggable-dragging {
+    z-index: 10;
+}
+
+.board > div > div.possible-move{ /* возможная клеточка куда походят */
+    box-shadow: inset 0 0 10px 2px rgba(216, 85, 0, 0.9);
+}
+
+.board .possible-moves  {
+    box-shadow: inset 0 0 120px 0px rgba(60, 221, 38, 0.9);
+}
+
+.board > div > div.take-move { /* взятие противоположной фигуры */
+    box-shadow: inset 0 0 10px 3px rgba(202, 86, 77, 0.9)
+}
+
+.board > div:nth-child(even) > div:nth-child(odd), .board > div:nth-child(odd) > div:nth-child(even) {
+    background-color: #b58863;
+}
+
+.board[data-border='true'] {
+    border-left: 1px solid #96643B;
+    border-top: 1px solid #96643B;
+}
+
+.board[data-border='true'] > div > div {
+    border: 1px solid #96643B;
+    border-top: 0;
+    border-left: 0;
+}
+
+.board > span.draw, .board > span.event{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.board > span.event {
+    opacity: 0;
+}

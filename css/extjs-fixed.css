@@ -1,0 +1,7 @@
+body .x-btn-group-body-default-framed .x-table-layout {
+    border-spacing: 0;
+}
+
+body .draw .x-panel-body-default {
+    background-color: transparent;
+}

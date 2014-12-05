@@ -1,0 +1,21 @@
+[Event "Casual game"]
+[Site "http://lichess.org/2qdvwwk8"]
+[Date "2013.12.26"]
+[White "bombascter"]
+[Black "AI-level-5"]
+[Result "1/2-1/2"]
+[WhiteElo "1712"]
+[BlackElo "?"]
+[PlyCount "109"]
+[Variant "From position"]
+[SetUp "1"]
+
+{это текст до первого хода} 1. d4 $1 {[%emt 0:00:01] это текст после первого
+хода} Nf6 {[%emt 0:00:02] Ёто текст до хода. √де-то тут же подсветка кдето~~ек}
+2. g3 {[%emt 0:00:00][%csl Yd4,Yf1,Yg2] ƒиаграмма [#]} g6 {[%emt 0:00:01]} (
+2... d5) 3. c4 $18 {[%emt 0:00:01]} Bg7 {[%emt 0:00:01]} 4. Nc3 {[%emt 0:00:01]
+} O-O {[%emt 0:00:01]} 5. Nf3 {[%emt 0:00:00]} d6 {[%emt 0:00:01]} 6. Bg2 {
+[%emt 0:00:01]} e5 {[%emt 0:00:01]} 7. dxe5 {[%emt 0:00:02]} dxe5 {[%emt 0:00:
+01]} 8. Qxd8 {[%emt 0:00:00]} Rxd8 {[%emt 0:00:01]} 9. Nxe5 {[%emt 0:00:00]}
+Be6 {[%emt 0:00:10]} 10. Bxb7 $142 {[%emt 0:00:08] Toto_marco resigns (Lag:
+Av=0.65s, max=1.3s)} 1-0
